@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fictional ID Card Generator — Novelty Universe Badges</title>
+  
+  <!-- Google Fonts for cinematic fiction themes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Chakra+Petch:wght@500;700;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@700&family=Great+Vibes&family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;600;800;900&family=Orbitron:wght@600;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Rajdhani:wght@500;600;700&family=Russo+One&family=Share+Tech+Mono&family=Special+Elite&display=swap" rel="stylesheet">
+  
+  <!-- Application Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Site Header / Brand Navigation -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-wrapper">
+        <div class="brand-icon-box" id="brandIcon">🪪</div>
+        <div>
+          <h1 class="brand-title">
+            Fictional ID Card Generator
+            <span class="brand-badge">Fan Prop Maker</span>
+          </h1>
+          <p class="brand-subtitle">Create authentic novelty identification badges inspired by fictional universes</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btnTopRandomize" class="btn btn-secondary" title="Populate fictional character lore">
+          🎲 Random Character Lore
+        </button>
+        <button id="btnTopFlip" class="btn btn-primary" title="Toggle between front and back of the badge">
+          🔄 Flip Card Side
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 1. Themed Template Selector (Horizontal Strip) -->
+  <section class="templates-strip-section">
+    <div class="section-label-bar">
+      <div class="section-label">
+        <span>⚡</span> Select Fictional Universe Template
+      </div>
+      <div class="input-subtext">Fixed layout blanks • Click any template to switch instantly</div>
+    </div>
+
+    <div class="template-grid" id="templateGrid">
+      <!-- 1. Tech Mogul -->
+      <button class="template-card-btn active" data-template="tech_mogul">
+        <div class="tpl-header">
+          <span class="tpl-icon">⚡</span>
+          <span class="tpl-pill">Sci-Fi Corp</span>
+        </div>
+        <div class="tpl-name">"Tech Mogul" Corporate ID</div>
+        <div class="tpl-cat">Futuristic, sleek, dark cyan neon, arc logo</div>
+      </button>
+
+      <!-- 2. Time Agency -->
+      <button class="template-card-btn" data-template="time_agency">
+        <div class="tpl-header">
+          <span class="tpl-icon">⏳</span>
+          <span class="tpl-pill">TVA Bureau</span>
+        </div>
+        <div class="tpl-name">"Time Agency" Official ID</div>
+        <div class="tpl-cat">Retro-futuristic, manila beige, stamped</div>
+      </button>
+
+      <!-- 3. Daily Newspaper -->
+      <button class="template-card-btn" data-template="press_badge">
+        <div class="tpl-header">
+          <span class="tpl-icon">📰</span>
+          <span class="tpl-pill">Press Pass</span>
+        </div>
+        <div class="tpl-name">"Daily Newspaper" Press Badge</div>
+        <div class="tpl-cat">Classic B&W newsprint, PRESS stamp, masthead</div>
+      </button>
+
+      <!-- 4. Secret Agency -->
+      <button class="template-card-btn" data-template="secret_agency">
+        <div class="tpl-header">
+          <span class="tpl-icon">🕶️</span>
+          <span class="tpl-pill">Black Ops</span>
+        </div>
+        <div class="tpl-name">"Secret Agency" Badge</div>
+        <div class="tpl-cat">Midnight stealth, holographic foil, reticle</div>
+      </button>
+
+      <!-- 5. Superhero Org -->
+      <button class="template-card-btn" data-template="superhero_org">
+        <div class="tpl-header">
+          <span class="tpl-icon">🛡️</span>
+          <span class="tpl-pill">Hero Alliance</span>
+        </div>
+        <div class="tpl-name">"Superhero Org" ID</div>
+        <div class="tpl-cat">Bold cobalt & gold, shield crest, active roster</div>
+      </button>
+
+      <!-- 6. ⭐ SPECIAL TAB: TVA Agent ID (Landscape) -->
+      <button class="template-card-btn template-special-btn" data-template="tva_special">
+        <div class="tpl-header">
+          <span class="tpl-icon">⭐</span>
+          <span class="tpl-pill special-pill">SPECIAL TAB</span>
+        </div>
+        <div class="tpl-name">TVA Agent ID (Landscape)</div>
+        <div class="tpl-cat">Screen-accurate Mobius badge • Giant TVA logo & seal</div>
+      </button>
+    </div>
+  </section>
+
+  <!-- Main Work Area: Left Form Sidebar + Right Live Card Preview -->
+  <main class="main-layout">
+
+    <!-- LEFT COLUMN: SIDEBAR FORM INPUTS -->
+    <aside class="sidebar-panel">
+      
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <span>⚙️</span> Badge Customization
+        </h2>
+        <div class="quick-tools">
+          <button id="btnShuffleId" class="btn btn-secondary btn-icon" title="Shuffle Badge Number">
+            🔀 Shuffle ID
+          </button>
+          <button id="btnRandomLore" class="btn btn-secondary btn-icon" title="Randomize Lore Character">
+            🎲 Lore
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION A: Photo Upload & Avatar Presets -->
+      <div class="form-section">
+        <div class="section-title-sm">
+          <span>📸</span> Operative Photo & Fit
+        </div>
+
+        <div class="photo-upload-card">
+          <div class="photo-input-row">
+            <div class="photo-preview-thumb" id="photoThumbPreview">
+              <img id="thumbImg" src="" alt="Photo Thumbnail">
+            </div>
+            
+            <div class="photo-actions">
+              <input type="file" id="filePhotoUpload" class="file-input-hidden" accept="image/*">
+              <button type="button" class="btn btn-secondary" id="btnTriggerUpload">
+                📁 Upload Custom Photo
+              </button>
+              <button type="button" class="btn btn-secondary" id="btnResetPhoto" style="font-size:0.75rem; padding: 4px 8px;">
+                ↺ Reset Avatar
+              </button>
+            </div>
+          </div>
+
+          <!-- Built-in Fictional Character Avatar Presets -->
+          <div class="avatar-preset-picker">
+            <div class="preset-picker-label">Or Pick Character Avatar Preset:</div>
+            <div class="avatar-preset-list" id="avatarPresetList">
+              <!-- Dynamically populated or rendered -->
+            </div>
+          </div>
+
+          <!-- Photo Adjusters (Fit Mode, Zoom, Pan X, Pan Y, Filter) -->
+          <div class="photo-sliders">
+            <div class="slider-group">
+              <label class="slider-label">
+                <span>Fit Mode (Crop/No Crop)</span>
+              </label>
+              <select id="selectPhotoFit" style="padding: 4px 8px; font-size: 0.78rem;">
+                <option value="cover">Fill Frame (Auto-Cover)</option>
+                <option value="contain">Fit Entire Image (No Crop)</option>
+              </select>
+            </div>
+
+            <div class="slider-group">
+              <label class="slider-label">
+                <span>Filter</span>
+              </label>
+              <select id="selectPhotoFilter" style="padding: 4px 8px; font-size: 0.78rem;">
+                <option value="none">Original Colors</option>
+                <option value="grayscale">Newspaper B&W</option>
+                <option value="sepia">Vintage Sepia</option>
+              </select>
+            </div>
+
+            <div class="slider-group">
+              <label class="slider-label">
+                <span>Zoom</span>
+                <span id="zoomVal">1.0x</span>
+              </label>
+              <input type="range" id="sliderZoom" min="0.2" max="3.0" step="0.05" value="1.0">
+            </div>
+
+            <div class="slider-group">
+              <label class="slider-label">
+                <span>Pan X</span>
+                <span id="panXVal">0px</span>
+              </label>
+              <input type="range" id="sliderPanX" min="-200" max="200" step="2" value="0">
+            </div>
+
+            <div class="slider-group">
+              <label class="slider-label">
+                <span>Pan Y</span>
+                <span id="panYVal">0px</span>
+              </label>
+              <input type="range" id="sliderPanY" min="-200" max="200" step="2" value="0">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION B: Fixed Identity Information Form -->
+      <div class="form-section">
+        <div class="section-title-sm">
+          <span>📋</span> Identity Information
+        </div>
+
+        <div class="form-grid">
+          
+          <!-- Full Name -->
+          <div class="form-group col-span-2">
+            <label class="field-label" id="lblFullName" for="inputFullName">
+              <span>Full Name</span>
+            </label>
+            <input type="text" id="inputFullName" placeholder="e.g. Alexander Vance">
+          </div>
+
+          <!-- Codename / Alias -->
+          <div class="form-group col-span-2">
+            <label class="field-label" id="lblCodename" for="inputCodename">
+              <span>Codename / Alias</span>
+              <span class="input-subtext">(Optional)</span>
+            </label>
+            <input type="text" id="inputCodename" placeholder="e.g. Architect-7">
+          </div>
+
+          <!-- Role / Title / Designation -->
+          <div class="form-group col-span-2">
+            <label class="field-label" id="lblDesignation" for="inputDesignation">
+              <span>Title / Role / Designation</span>
+            </label>
+            <input type="text" id="inputDesignation" placeholder="e.g. Chief Quantum Architect">
+          </div>
+
+          <!-- ID / Badge Number -->
+          <div class="form-group col-span-2">
+            <label class="field-label" id="lblIdNumber" for="inputIdNumber">
+              <span>ID / Badge Number</span>
+            </label>
+            <div class="input-with-button">
+              <input type="text" id="inputIdNumber" placeholder="e.g. TM-8049-EX">
+              <button type="button" class="btn btn-secondary btn-icon" id="btnShuffleIdInline" title="Generate New Badge Number">
+                🔀
+              </button>
+            </div>
+          </div>
+
+          <!-- Department / Division -->
+          <div class="form-group col-span-2">
+            <label class="field-label" id="lblDepartment" for="inputDepartment">
+              <span>Department / Division</span>
+            </label>
+            <input type="text" id="inputDepartment" placeholder="e.g. Synthetic Consciousness Core">
+          </div>
+
+          <!-- Clearance Level Dropdown -->
+          <div class="form-group col-span-2">
+            <label class="field-label" id="lblClearance" for="selectClearance">
+              <span>Security Clearance Level</span>
+            </label>
+            <select id="selectClearance">
+              <!-- Dynamically populated per template -->
+            </select>
+          </div>
+
+          <!-- Issue Date -->
+          <div class="form-group">
+            <label class="field-label" id="lblIssueDate" for="inputIssueDate">
+              <span>Issue Date</span>
+            </label>
+            <input type="text" id="inputIssueDate" placeholder="2026-04-12">
+            <div class="quick-tags">
+              <button type="button" class="quick-tag-btn" id="btnDateToday">Today</button>
+              <button type="button" class="quick-tag-btn" id="btnDateRetro">1984</button>
+            </div>
+          </div>
+
+          <!-- Expiry Date -->
+          <div class="form-group">
+            <label class="field-label" id="lblExpiryDate" for="inputExpiryDate">
+              <span>Expiry Date</span>
+            </label>
+            <input type="text" id="inputExpiryDate" placeholder="2031-04-12">
+            <div class="quick-tags">
+              <button type="button" class="quick-tag-btn" id="btnExp5Years">+5 Yrs</button>
+              <button type="button" class="quick-tag-btn" id="btnExpPermanent">Indefinite</button>
+            </div>
+          </div>
+
+          <!-- Signature Line Text -->
+          <div class="form-group col-span-2">
+            <label class="field-label" id="lblSignature" for="inputSignature">
+              <span>Typed Signature (Autograph)</span>
+            </label>
+            <input type="text" id="inputSignature" placeholder="e.g. A. Vance">
+          </div>
+
+          <!-- Official Stamp Text -->
+          <div class="form-group col-span-2">
+            <label class="field-label" id="lblStamp" for="inputStamp">
+              <span>Official Rubber Stamp Text</span>
+            </label>
+            <input type="text" id="inputStamp" placeholder="e.g. CLASSIFIED TECH">
+          </div>
+
+        </div>
+      </div>
+
+    </aside>
+
+
+    <!-- RIGHT COLUMN: LIVE BADGE PREVIEW & EXPORT DESK -->
+    <section class="preview-panel">
+
+      <!-- Preview Control Toolbar -->
+      <div class="preview-toolbar">
+        <!-- Front / Back Switcher -->
+        <div class="side-switch-group">
+          <button type="button" class="side-toggle-btn active" id="btnSideFront">
+            <span>🪪</span> Front
+          </button>
+          <button type="button" class="side-toggle-btn" id="btnSideBack">
+            <span>🔄</span> Back
+          </button>
+        </div>
+
+        <!-- Orientation Switcher -->
+        <div class="side-switch-group">
+          <button type="button" class="side-toggle-btn active" id="btnOrientPortrait" title="Vertical Lanyard Format">
+            <span>📱</span> Portrait
+          </button>
+          <button type="button" class="side-toggle-btn" id="btnOrientLandscape" title="Horizontal Badge Format">
+            <span>💳</span> Landscape
+          </button>
+        </div>
+
+        <button type="button" class="btn btn-secondary btn-icon" id="btnFlipCardAction" title="Flip Card to Other Side">
+          ↻ Flip
+        </button>
+      </div>
+
+      <!-- Physical Lanyard Mockup & 3D Interactive Card Frame -->
+      <div class="badge-display-frame" id="badgeFrame">
+        
+        <!-- Lanyard Strap & Carabiner Clip Mockup -->
+        <div class="lanyard-mockup">
+          <div class="lanyard-strap"></div>
+          <div class="lanyard-carabiner"></div>
+        </div>
+
+        <!-- Canvas Card Display Container -->
+        <div class="canvas-card-wrapper portrait" id="canvasWrapper">
+          <!-- Fabric.js HTML5 Canvas -->
+          <canvas id="badgeCanvas" width="600" height="950"></canvas>
+          <!-- Holographic Sheen Filter Overlay -->
+          <div class="holo-shimmer-overlay"></div>
+        </div>
+
+      </div>
+
+      <!-- Export Action Deck -->
+      <div class="export-deck">
+        <div class="export-title">
+          <span>💾 Print & Download Options</span>
+          <span class="input-subtext">300 DPI Vector-sharp</span>
+        </div>
+
+        <div class="export-btn-grid">
+          <button type="button" class="btn btn-primary" id="btnDownloadFrontPng">
+            ⬇️ Download Front (PNG)
+          </button>
+          <button type="button" class="btn btn-secondary" id="btnDownloadBothPng">
+            📦 Download Front + Back (PNG)
+          </button>
+          <button type="button" class="btn btn-accent" id="btnDownloadCr80Pdf">
+            📄 Standard CR80 PDF
+          </button>
+          <button type="button" class="btn btn-secondary" id="btnDownloadSheetPdf">
+            🖨️ Printable A4 Sheet (PDF)
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Site Footer with Novelty Disclaimer -->
+  <footer class="site-footer">
+    <div class="disclaimer-box">
+      <span>⚠️</span>
+      <span>DISCLAIMER: For entertainment, cosplay, and fan novelty purposes only — not a real, legal, or valid identification document. All logos and organization graphics are original fictional placeholders.</span>
+    </div>
+    <p class="footer-credits">
+      Built with HTML5 Canvas (Fabric.js) & jsPDF • Fully client-side • Standard CR80 card dimensions (3.375" × 2.125")
+    </p>
+  </footer>
+
+  <!-- Script Libraries (Local Offline with cdnjs fallback) -->
+  <script src="lib/fabric.min.js"></script>
+  <script src="lib/jspdf.umd.min.js"></script>
+  <script src="lib/JsBarcode.all.min.js"></script>
+  <script src="lib/qrcode.min.js"></script>
+
+  <!-- Application Logic Modules -->
+  <script src="js/templates-data.js"></script>
+  <script src="js/avatar-presets.js"></script>
+  <script src="js/card-renderer.js"></script>
+  <script src="js/export-manager.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
